@@ -18,13 +18,13 @@ class PhaseSimpleView extends WatchUi.WatchFace {
     
     // [修正] 曜日に応じた基準角度を（1時〜7時に）修正
     private var mDayAngleMap as Dictionary = {
-        Time.Gregorian.DAY_SUNDAY => 210, // 7時
-        Time.Gregorian.DAY_MONDAY => 30,  // 1時
-        Time.Gregorian.DAY_TUESDAY => 60, // 2時
+        Time.Gregorian.DAY_SUNDAY => 45,
+        Time.Gregorian.DAY_MONDAY => 60, // 2時
+        Time.Gregorian.DAY_TUESDAY => 75,
         Time.Gregorian.DAY_WEDNESDAY => 90, // 3時
-        Time.Gregorian.DAY_THURSDAY => 120, // 4時
-        Time.Gregorian.DAY_FRIDAY => 150, // 5時
-        Time.Gregorian.DAY_SATURDAY => 180  // 6時
+        Time.Gregorian.DAY_THURSDAY => 105,
+        Time.Gregorian.DAY_FRIDAY => 120, // 4時
+        Time.Gregorian.DAY_SATURDAY => 135
     };
 
 
@@ -125,8 +125,8 @@ class PhaseSimpleView extends WatchUi.WatchFace {
         var baseAngle = mDayAngleMap[todayInfo.day_of_week] as Float;
         var totalMinutes = (todayInfo.hour * 60.0) + todayInfo.min;
         var dayProgress = totalMinutes / 1440.0;
-        // [修正] ご提示のコードに合わせて 15° (60-45=15) にする
-        var offsetAngle = dayProgress * 15.0; 
+        // [修正] ご提示のコードに合わせて 5° (15 / 2 * 2/3) にする
+        var offsetAngle = dayProgress * 5.0; 
 
         return baseAngle + offsetAngle;
     }
@@ -145,7 +145,7 @@ class PhaseSimpleView extends WatchUi.WatchFace {
         dc.drawText(
             point[0], 
             point[1], 
-            Graphics.FONT_MEDIUM, 
+            Graphics.FONT_SMALL,
             dateStr, 
             Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER
         );
